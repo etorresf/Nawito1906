@@ -1,0 +1,26 @@
+Release Notes - Nawito1906
+-------------------------------------
+
+* New condition for bad captures.
+* New own book scheme, with learning based on ant colony algorithm.
+* New position for the bench test.
+* New values for MATE and game phases.
+* More big hash material value.
+* New transposition table replacement strategy based on Bucket systems. 
+* The calculation of transposition table index now is based on power of two.
+* Now the transposition table delete the old entries.
+* New output for the STS test.
+* Solved bug with a empty profile.
+* Solved bugs with some supported endgames.
+
+
+
+
+
+
+
+
+
+
+
+

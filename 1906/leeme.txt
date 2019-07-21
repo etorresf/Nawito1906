@@ -1,0 +1,187 @@
+Nawito1906 - Motor de ajedrez por Ernesto Torres. Cuba.
+===============================================================================================
+Versión del motor:			1906
+Fecha de publicación:		15-06-2019
+Versiones disponibles:		Windows/Linux de 32 bits
+Protocolo de comunicación:	Winboard
+ELO estimado:				± 2600
+Licencia:					GPL
+Autor email:				ernesto2@nauta.cu
+
+TABLA DE CONTENIDO
+===============================================================================================
+1) Descripción general.
+2) Planes futuros.
+3) Contenido.
+4) Rendimiento.
+5) Problemas conocidos.
+6) Características.
+7) Licencia.
+8) Créditos.
+
+
+1)	DESCRIPCIÓN GENERAL
+===============================================================================================
+
+Nawito1906 es un motor de ajedrez cubano libre derivado de Danasah5.07 compatible con el protocolo 
+Winboard. Para sacarle el máximo provecho debería usarse bajo una GUI(interfaz de usuario gráfica) 
+como Arena(Linux/Windows), Winboard(Windows), Pychess(Linux/Windows), SCID(Linux/Windows).
+
+Su autor, se ha basado en la función de búsqueda del motor Danasah5.07 e inspirado en otros como TSCP, 
+CPW, Rebel, etc. para desarrollar ideas propias y dotarlo de un estilo particular.
+
+Esta escrito en C y se utiliza CodeBlocks con GNU GCC, tanto para Windows como para Linux. 
+
+Este motor usa su propio esquema de libros de aperturas, experimentando con la metahuerística Colonia 
+de Hormigas para su aprendizaje. Es muy probable que este esquema sufra cambios en el futuro mientras
+se perfecciona.
+
+Por favor reporte cualquier idea, sugerencia o error acerca del motor.
+
+
+2)	PLANES FUTUROS
+===============================================================================================
+
+- Corrección de errores con algunos finales soportados.
+- Corrección de error con Aspiration Window.
+- Soporte para otros finales.
+- Mejorar la movilidad de las piezas y las simplificaciones.
+- Mejorar el control del tiempo.
+- Optimizaciones menores relacionadas con la búsqueda.
+- Mejoraras y optimizaciones relacionados con el aprendizaje del libro.
+- Implementación del test ecm98.epd.
+
+
+3)	CONTENIDO
+===============================================================================================
+
+- Nawito1906				->	Motor para Linux.
+- Nawito1906.exe			->	Motor para Windows.
+- leeme.txt					->	Este archivo.
+- readme.txt				->	Traducción al inglés de este archivo.
+- Nawito1906.ini			->	Configuración del motor.
+- Nawito1906.epd			->	Posiciones para realizar la prueba STS.
+- Nawito1906.sts			->	Puntuación de cada posición del archivo Nawito1906.epd.
+- WhiteAnt1906.nbk, 
+  BlackAnt1906.nbk, 
+  Nawito1812MainBook.nbk,
+  Nawito1812WhiteBook.nbk,
+  Nawito1812BlackBook.nbk,	->	Libros de aperturas del motor Nawito.
+- logo.jpg					->	Logo of program.
+
+
+4)	RENDIMIENTO
+===============================================================================================
+
+--perft <n>				->	Comando para descubrir fallos y velocidad del generador
+							de movimientos desde la posición:
+							"r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ; D1 48; D2 2039; D3 97862; D4 4085603; D5 193690690; D6 8031647685;"
+							hasta la profundidad <n> (por defecto 5).
+--bench					->	Comando para comprobar la velocidad relativa del ordenador 
+							respecto a otro. Resuelve mate en 7 desde la posición:
+							"r4nk1/4brp1/q2p1pQP/3P4/2p1NP2/P7/1B6/1KR3R1 w - - 1 34 ; M11;"
+--STS <t1> <t2>			->	Comando para ejecutar la Suite de Pruebas Estratégicas(STS)
+							desde el tema <t1> hasta el tema <t2>
+--STStheme <t1> <t2>	->	Comando para mostrar el resultado de la Suite de Pruebas Estratégicas(STS)
+							desde el tema <t1> hasta el tema <t2>
+
+
+5) PROBLEMAS CONOCIDOS.
+===============================================================================================
+
+Por favor reporte cualquier error acerca del motor.
+---------------------------------------------------
+
+- Problemas con la configuración de wb2uci para jugar bajo la interfaz de Fritz o Chessbase.
+
+
+6)	CARACTERÍSTICAS
+===============================================================================================
+
+- Protocolo						->	Winboard.
+- Representación del tablero	->	Vector lineal de 256 punteros a listas de piezas dinámicas.
+- Generador de movimientos		->	Sencillo.
+- Búsqueda						->	Aspiration window
+								->	Profundidad iterativa.
+								->	PVS/Alpha-Beta.
+								->	Quiescence.
+- Reducciones/Podas				->	Distancia mate.
+								->	Movimiento nulo.
+								->	Tabla de transposición.
+								->	Futility.
+								->	Razoring.
+								->	Captures.
+								->	Late Move Reductions (LMR).
+- Extensiones					->	Jaque.
+								->	Amenaza de mate.
+								->	Entrando a final de peones.
+- Ordenación de movimientos		->	PV.
+								->	Tabla de transposición.
+								->	Profundización iterativa Interna. (IID)
+								->	MVV/LVA.
+								->	Killer heurístico.
+								->	Historico heurístico.
+- Evaluación					->	Material.
+								->	Posición de las piezas en el tablero.
+								->	Material tables.
+								->	Tapered eval.
+								->	Estructura de peones.
+									->	Peón retrasado.
+									->	Peón candidato.
+									->	Peón doblados.
+									->	Peón aislado.
+									->	Peón pasado.
+								->	Pareja de alfiles.
+								->	Alfil malo.
+								->	Alfil atrapado.
+								->	Caballo atrapado.
+								->	Caballo apostado.
+								->	Caballo valor decreciente según desaparecen los peones.
+								->	Torre valor creciente según desaparecen los peones.
+								->	Torre en fila abierta y semi abierta.
+								->	Torre en octava.
+								->	Torre atrapada.
+								->	Torre bloqueada.
+								->	Torre en 7ma.
+								->	Seguridad del rey.
+								->	Enroque.
+								->	Escudo del rey.
+								->	Control del centro
+								->	Finales (KP vs k, KBN vs k, KR vs k, KBB vs K, KRP vs KR, otros).
+- Libro de Aperturas			->	Esquema experimental con aprendizaje basado en el algoritmo Colonia de Hormigas.
+									En las pruebas realizadas con partidas rápidas, el aprendizaje reporta una ganancia de 25 puntos ELO con tendencia 
+									a crecer respecto al aprendizaje tradicional del esquema Polyglot.
+								->	El aprendizaje del libro aun esta bajo pruebas y perfeccionamiento.
+- Otros							->	Detección del final del juego con las reglas de la FIDE, incluyendo triple repetición y la regla de 50 movimientos..
+									Tablas por material insuficiente con (KNN vs k, K vs knn, (KR vs k, K vs kr)...
+- Modo de juego					->	Control por tiempo (convencional, incremental y tiempo fijo por movimiento) o profundidad fija.
+
+
+7)	LICENCIA
+===============================================================================================
+
+Este programa es software libre: puedes redistribuirlo y/o modificarlo. Bajo los términos de la 
+Licencia Pública General GNU tal como fue publicada por la Free Software Foundation, ya sea la 
+versión 3 de la Licencia, o (a su elección) cualquier versión posterior.
+
+Este programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; sin 
+siquiera la garantía implícita de COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO PARTICULAR. Ver el 
+GNU General Public License para más detalles.
+
+Debería haber recibido una copia de la Licencia Pública General de GNU junto con este programa. 
+Si no, vea <http://www.gnu.org/licenses/>.
+
+
+8)	CRÉDITOS
+===============================================================================================
+
+Estoy muy agradecido a las siguientes personas:
+
+- A mi familia y amigos, que siempre están ahí para ayudar.
+- A todos aquellos que han decidido compartir el código fuente de sus motores (Me han aclarado funciones y entendimiento de ellos).
+- A Pedro Castro por la funcion de busqueda de su motor DanaSah. Por su cooperación y por aclararme asuntos legales en cuanto a motores de ajedrez.
+- A la web CPW <a href="http://chessprogramming.wikispaces.com">(http://chessprogramming.wikispaces.com)</a> por todo el contenido sobre las técnicas aplicables a un motor ajedrez.
+- A la web ajedrezmagno <a href="http://ajedrezmagno.cubava.cu"> por divulgar y brindar información acerca de Nawito.
+- A Dusan Stamenkovic por hacer un logo para Nawito.
+- A Pedro Moreno por crear los libros: Nawito1812MainBook.nbk, Nawito1812WhiteBook.nbk and Nawito1812BlackBook.nbk
+- A todos aquellos que han jugado con el motor y han publicado su experiencia y opiniones.
